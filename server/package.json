@@ -15,7 +15,7 @@
   "dependencies": {
     "express": "*",
     "int64-buffer": "*",
-    "opendds": "git://github.com/oci-labs/node-opendds.git#always_attempt_sample_write",
+    "opendds": "git://github.com/oci-labs/node-opendds.git",
     "uuid": "*"
   }
 }
