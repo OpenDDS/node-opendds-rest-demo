@@ -1,0 +1,22 @@
+{
+  "name": "node-opendds-rest-demo",
+  "version": "0.0.0",
+  "description": "A Simple Example of Rest-to-DDS using node-opendds",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/simpsont-oci/node-opendds-rest-demo.git"
+  },
+  "author": "TimothySimpson",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "express": "*",
+    "int64-buffer": "*",
+    "opendds": "git://github.com/oci-labs/node-opendds.git#always_attempt_sample_write",
+    "socket.io": "*",
+    "uuid": "*"
+  }
+}

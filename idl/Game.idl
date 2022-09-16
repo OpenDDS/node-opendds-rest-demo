@@ -1,0 +1,23 @@
+#include <dds/DdsDcpsCore.idl>
+
+module Game {
+
+@topic
+struct PlayerConnection {
+  @key string guid;
+  string player_id;
+  DDS::Time_t connected_since;
+  string server_id;
+};
+
+@topic
+struct AugmentedPlayerConnection {
+  @key string guid;
+  string player_id;
+  DDS::Time_t connected_since;
+  string server_id;
+  boolean force_disconnect;
+  float average_connection;
+};
+
+};

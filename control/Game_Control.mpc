@@ -1,0 +1,17 @@
+project: dcpsexe {
+
+  exename = control
+
+  after += Game_Idl
+
+  includes += $(DEMO_ROOT)/idl
+
+  libs += Game_Idl
+
+  libpaths += $(DEMO_ROOT)/lib
+
+  Source_Files {
+    main.cpp
+  }
+}
+
