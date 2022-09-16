@@ -1,0 +1,13 @@
+GameC.cpp
+GameC.h
+GameC.inl
+GameS.cpp
+GameS.h
+GameTypeSupport.idl
+GameTypeSupportC.cpp
+GameTypeSupportC.h
+GameTypeSupportC.inl
+GameTypeSupportImpl.cpp
+GameTypeSupportImpl.h
+GameTypeSupportS.cpp
+GameTypeSupportS.h
