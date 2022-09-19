@@ -70,6 +70,9 @@ GameControlClient.prototype.finalizeDds = function(argsArray) {
 GameControlClient.prototype.initializeDds = function(argsArray) {
   var CONTROL_DOMAIN_ID = 9;
   this.factory = opendds.initialize.apply(null, argsArray);
+  if (!process.env.DEMO_ROOT) {
+    throw new Error("DEMO_ROOT environment variable not set");
+  }
   this.library = opendds.load(path.join(process.env.DEMO_ROOT, 'lib', 'Game_Idl'));
   if (!this.library) {
     throw new Error("Could not open type support library");

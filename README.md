@@ -16,20 +16,15 @@ notification (e.g. websockets) would most likely be used for the sake of perform
  1. Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
  2. Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
  3. Set up the environment variable DEMO_ROOT to point to the root of this repository
- 4. Set up V8_ROOT and NAN_ROOT environment variables. Assuming `nvm`:
-```
-  export V8_ROOT=$NVM_INC/../..
-  export NAN_ROOT=$DEMO_ROOT/server/node_modules/nan
-```
- 5. Generate project files using mwc. Assuming `gnuace`:
+ 4. Generate project files using mwc. Assuming `gnuace`:
 ```
   mwc.pl -type gnuace node-opendds-rest-demo.mwc
 ```
- 6. Build C++ IDL library and `control` application. Again, assuming 'gnuace':
+ 5. Build C++ IDL library and `control` application. Again, assuming 'gnuace':
 ```
   make depend && make
 ```
- 7. Build Node.js `server` application
+ 6. Build Node.js `server` application
 ```
   cd server
   npm install
