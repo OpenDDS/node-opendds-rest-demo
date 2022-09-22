@@ -4,13 +4,16 @@
     <title>Lightweight Game Client</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      #input_div { background: #AAA; padding: 3px; position: fixed;  bottom: 0; width: 100%; }
+      body { font: 20px Helvetica, Arial; }
+      button { font: 20px Helvetica, Arial; }
+      #display_div { background: #CDC; outline: solid 1px black; margin: 0px; padding: 3px; position: fixed; top: 10%; left: 10%; width: 80%; }
+      #input_div { background: #ACF; outline: solid 1px black; margin: 0px; padding: 3px; position: fixed; bottom: 10%; left: 10%; width: 80%; }
       #add_player { display: inline; }
       #remove_player { display: inline; }
-      #player_data { list-style-type: none; margin: 0; padding: 0; }
-      #player_data li { padding: 5px 10px; }
-      #player_data li:nth-child(odd) { background: #eef; }
+      #player_data { list-style-type: none; margin: 0; padding: 1; }
+      #player_data li { padding: 5px; }
+      #player_data li:nth-child(odd) { background: #EFE; font-family: "Lucida Console", "Courier New", monospace; }
+      #player_data li:nth-child(even) { background: #DED; font-family: "Lucida Console", "Courier New", monospace; }
     </style>
   </head>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>

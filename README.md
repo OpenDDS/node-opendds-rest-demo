@@ -40,6 +40,7 @@ at the same time. Generally speaking, you hopefully shouldn't ever need to resta
 
  1. Run the control application. Assuming some flavor of Linux/UNIX:
 ```
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/idl
   cd control
   ./control -DCPSPendingTimeout 3 -DCPSConfigFile ../rtps.ini
 ```
