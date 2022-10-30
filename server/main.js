@@ -6,8 +6,7 @@ var my_args = process.argv.slice(2);
 var port_index = my_args.indexOf("--port");
 var PORT = (port_index == -1 || my_args.size <= port_index + 1) ? 3210 : my_args[port_index + 1];
 var app = require('express')();
-var http = require('http').Server(app);
-//var io = require('socket.io', { rememberTransport: false, transports: ['websocket'] })(http);
+var expressWs = require('express-ws')(app);
 
 var gc_client = new GameControlClient();
 
@@ -25,6 +24,25 @@ function get_time() {
 var server_id = uuidv4();
 
 var apc_cache = new Map();
+
+
+// middleware for debugging
+app.use(function (req, res, next) {
+  //console.log(app.ws)
+  return next();
+});
+
+const Websockets = {};
+
+app.ws('/ws', (ws, req) => {
+  ws.on('message', (msg) => {
+    console.log(`received: ${msg}`);
+    ws.send(`echo ${msg}`);
+  });
+  ws.on('close', (code) => {
+    console.error(`Client gone with code: ${code}`);
+  });
+});
 
 app.put('/playerConnection/:player_name/:player_id', function(req, res) {
   const {player_name, player_id} = req.params;
@@ -65,7 +83,7 @@ app.get('/favicon.ico', function(req, res){
 let do_listen = true;
 while (do_listen) {
   try {
-    http.listen(PORT, function(err) {
+    app.listen(PORT, function(err) {
       if (err) {
         console.log("Error in server setup");
       }
@@ -80,12 +98,22 @@ while (do_listen) {
 function add_apc(sample) {
   console.log('Adding APC:' + JSON.stringify(sample));
   apc_cache.set(sample.guid, sample);
+  notifyWs(sample);
 }
 
 function remove_apc(guid) {
   console.log('Removing APC for guid:' + JSON.stringify(guid));
   apc_cache.delete(guid);
+  notifyWs(`${guid} left the game`);
+}
+
+function notifyWs(msg) {
+  // get all clients connetced via webSocket
+  const clients = expressWs.getWss().clients;
+  clients.forEach((client) => {
+    //publish the same message via WebSocket
+    client.send(JSON.stringify(msg));
+  });
 }
 
 gc_client.subscribe_augmented_player_connections(add_apc, remove_apc);
-

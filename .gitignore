@@ -1,3 +1,6 @@
+## ignore npm install dir
+node_modules
+##
 .depend.*
 .idea/
 cmake-build*/
