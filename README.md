@@ -56,3 +56,7 @@ at the same time. Generally speaking, you hopefully shouldn't ever need to resta
 Same as the steps above, though you will obviously need to launch multiple 'server' applications running on different
 ports (use the `--port <PORT>` option) as well as have multiple browser tabs open to connect to each of the servers.
 
+### Misc
+
+Additionally, this demo also exists in a form that supports websockets interactions between client and server. Check out the `websockets` branch if you're interested in seeing those improvements.
+
