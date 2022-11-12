@@ -16,7 +16,9 @@ notification (e.g. websockets) would most likely be used for the sake of perform
  1 a. Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
  1 b. Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
 ```
-  source <PathToOpenDDS>/sentenv.sh
+  cd <PathToOpenDDS>
+  source sentenv.sh
+  cd <pathToThisDemoRoot>
 ```
  2. Set up the environment variable DEMO_ROOT to point to the root of this repository
 ```
