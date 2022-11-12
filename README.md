@@ -14,8 +14,8 @@ notification (e.g. websockets) would most likely be used for the sake of perform
 ## Building the Demo
 
  1.
-  a. Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
-  b. Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
+   - Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
+   - Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
 ```
   cd <PathToOpenDDS>
   source sentenv.sh
