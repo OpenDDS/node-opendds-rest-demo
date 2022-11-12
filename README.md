@@ -13,18 +13,24 @@ notification (e.g. websockets) would most likely be used for the sake of perform
 
 ## Building the Demo
 
- 1. Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
- 2. Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
- 3. Set up the environment variable DEMO_ROOT to point to the root of this repository
- 4. Generate project files using mwc. Assuming `gnuace`:
+ 1 a. Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
+ 1 b. Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
+```
+  source <PathToOpenDDS>/sentenv.sh
+```
+ 2. Set up the environment variable DEMO_ROOT to point to the root of this repository
+```
+  export DEMO_ROOT=$(pwd)
+```
+ 3. Generate project files using mwc. Assuming `gnuace`:
 ```
   mwc.pl -type gnuace node-opendds-rest-demo.mwc
 ```
- 5. Build C++ IDL library and `control` application. Again, assuming 'gnuace':
+ 4. Build C++ IDL library and `control` application. Again, assuming 'gnuace':
 ```
   make depend && make
 ```
- 6. Build Node.js `server` application
+ 5. Build Node.js `server` application
 ```
   cd server
   npm install
