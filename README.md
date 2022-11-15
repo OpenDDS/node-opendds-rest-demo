@@ -65,3 +65,17 @@ at the same time. Generally speaking, you hopefully shouldn't ever need to resta
 Same as the steps above, though you will obviously need to launch multiple 'server' applications running on different
 ports (use the `--port <PORT>` option) as well as have multiple browser tabs open to connect to each of the servers.
 
+### Trouble Shooting
+
+#### Error: Could not load node-opendds addon module
+If you are experiencing the following error when starting the server,
+```
+Error: Could not load node-opendds addon module
+```
+make that the $PATH is containing all OpenDDS libs. It should look something like:
+
+```
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/ubuntu/source/OpenDDS-3.22/ACE_wrappers/bin:/home/ubuntu/source/OpenDDS-3.22/bin
+```
+
+fix it by sourcing the OpenDDS `setenv.sh` script, e.g. `source ../OpenDDS-3.2.2/setenv.sh`
