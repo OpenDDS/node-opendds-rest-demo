@@ -1,21 +1,22 @@
-var GameControlClient = require('./game_control_client')
-var Uint64BE = require("int64-buffer").Uint64BE;
-const { v4 : uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+import express, { Application, Request, Response } from 'express';
+
+import expressWs from 'express-ws';
+import { GameControlClient } from './GameControlClient';
+const { app, getWss } = expressWs(express());
 
 var my_args = process.argv.slice(2);
 var port_index = my_args.indexOf("--port");
-var PORT = (port_index == -1 || my_args.size <= port_index + 1) ? 3210 : my_args[port_index + 1];
-var app = require('express')();
-var expressWs = require('express-ws')(app);
+var PORT: number = (port_index == -1 || my_args.length <= port_index + 1) ? 3210 : Number(my_args[port_index + 1]);
 
-var gc_client = new GameControlClient();
+const gc_client = new GameControlClient();
 
 // Split out DDS args
 var ddsArgs = process.argv.slice(process.argv.indexOf(__filename) + 1);
 
 gc_client.initializeDds(ddsArgs);
 
-function get_time() {
+const get_time = () => {
   var date = new Date();
   var ms = date.getTime();
   return { sec: Math.floor(ms / 1000), nsec: (ms % 1000) * 1000000 };
@@ -32,9 +33,7 @@ app.use(function (req, res, next) {
   return next();
 });
 
-const Websockets = {};
-
-app.ws('/ws', (ws, req) => {
+app.ws('/ws', (ws: any, req: Request) => {
   ws.on('message', (msg) => {
     console.log(`received: ${msg}`);
     ws.send(`echo ${msg}`);
@@ -44,21 +43,24 @@ app.ws('/ws', (ws, req) => {
   });
 });
 
-app.put('/playerConnection/:player_name/:player_id', function(req, res) {
+app.put('/playerConnection/:player_name/:player_id', (req: Request, res: Response) => {
   const {player_name, player_id} = req.params;
   var pc = {
+    // this is derived from <Game.idl>::PlayerConnection
     guid: player_id,
     player_id: player_name,
     connected_since: get_time(),
-    server_id : server_id
+    server_id : server_id,
+    vehicleSpeed: 4000
   };
   let success = gc_client.create_player_connection(pc);
   res.status(success ? 200 : 404).end();
 });
 
-app.delete('/playerConnection/:player_name/:player_id', function(req, res) {
+app.delete('/playerConnection/:player_name/:player_id', (req: Request, res: Response) => {
   const {player_name, player_id} = req.params;
   var pc = {
+    // this is derived from <Game.idl>::PlayerConnection
     guid: player_id,
     player_id: player_name,
     connected_since: get_time(),
@@ -68,15 +70,15 @@ app.delete('/playerConnection/:player_name/:player_id', function(req, res) {
   res.status(success ? 200 : 404).end();
 });
 
-app.get('/augmentedPlayerConnection/', function(req, res){
+app.get('/augmentedPlayerConnection/', (req: Request, res: Response) => {
   res.status(200).send(JSON.stringify(apc_cache.size ? Object.fromEntries(apc_cache) : {}));
 });
 
-app.get('/', function(req, res){
+app.get('/', (req: Request, res: Response) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/favicon.ico', function(req, res){
+app.get('/favicon.ico', (req: Request, res: Response) => {
   res.sendFile(__dirname + '/favicon.ico');
 });
 
@@ -101,7 +103,7 @@ function add_apc(sample) {
   notifyWs(sample);
 }
 
-function remove_apc(guid) {
+function remove_apc(guid:string) {
   console.log('Removing APC for guid:' + JSON.stringify(guid));
   apc_cache.delete(guid);
   notifyWs(`${guid} left the game`);
@@ -109,7 +111,7 @@ function remove_apc(guid) {
 
 function notifyWs(msg) {
   // get all clients connetced via webSocket
-  const clients = expressWs.getWss().clients;
+  const clients = getWss().clients;
   clients.forEach((client) => {
     //publish the same message via WebSocket
     client.send(JSON.stringify(msg));

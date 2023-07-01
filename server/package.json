@@ -18,5 +18,8 @@
     "int64-buffer": "1.0.1",
     "opendds": "0.2.1",
     "uuid": "9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3"
   }
 }

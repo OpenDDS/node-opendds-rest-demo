@@ -56,8 +56,9 @@ at the same time. Generally speaking, you hopefully shouldn't ever need to resta
  2. Run the server application
 ```
   cd server
-  node main.js -DCPSPendingTimeout 3 -DCPSConfigFile ../rtps.ini
+  npx ts-node main.js -DCPSPendingTimeout 3 -DCPSConfigFile ../rtps.ini
 ```
+
  3. Navigate a javascript-enabled web browser to [http://localhost:3210](http://localhost:3210)
 
 ### Multiple Servers
