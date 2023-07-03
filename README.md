@@ -13,18 +13,27 @@ notification (e.g. websockets) would most likely be used for the sake of perform
 
 ## Building the Demo
 
- 1. Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
- 2. Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
- 3. Set up the environment variable DEMO_ROOT to point to the root of this repository
- 4. Generate project files using mwc. Assuming `gnuace`:
+ 1.
+   - Set up the OpenDDS environment variables (DDS_ROOT, TAO_ROOT, ACE_ROOT etc)
+   - Set up PATH / LD_LIBRARY_PATH to include OpenDDS, TAO, ACE, and MPC binaries
+```
+  cd <PathToOpenDDS>
+  source sentenv.sh
+  cd <pathToThisDemoRoot>
+```
+ 2. Set up the environment variable DEMO_ROOT to point to the root of this repository
+```
+  export DEMO_ROOT=$(pwd)
+```
+ 3. Generate project files using mwc. Assuming `gnuace`:
 ```
   mwc.pl -type gnuace node-opendds-rest-demo.mwc
 ```
- 5. Build C++ IDL library and `control` application. Again, assuming 'gnuace':
+ 4. Build C++ IDL library and `control` application. Again, assuming 'gnuace':
 ```
   make depend && make
 ```
- 6. Build Node.js `server` application
+ 5. Build Node.js `server` application
 ```
   cd server
   npm install
@@ -47,8 +56,9 @@ at the same time. Generally speaking, you hopefully shouldn't ever need to resta
  2. Run the server application
 ```
   cd server
-  node main.js -DCPSPendingTimeout 3 -DCPSConfigFile ../rtps.ini
+  npx ts-node main.ts -DCPSPendingTimeout 3 -DCPSConfigFile ../rtps.ini
 ```
+
  3. Navigate a javascript-enabled web browser to [http://localhost:3210](http://localhost:3210)
 
 ### Multiple Servers
@@ -56,3 +66,17 @@ at the same time. Generally speaking, you hopefully shouldn't ever need to resta
 Same as the steps above, though you will obviously need to launch multiple 'server' applications running on different
 ports (use the `--port <PORT>` option) as well as have multiple browser tabs open to connect to each of the servers.
 
+### Trouble Shooting
+
+#### Error: Could not load node-opendds addon module
+If you are experiencing the following error when starting the server,
+```
+Error: Could not load node-opendds addon module
+```
+make that the $PATH is containing all OpenDDS libs. It should look something like:
+
+```
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/ubuntu/source/OpenDDS-3.22/ACE_wrappers/bin:/home/ubuntu/source/OpenDDS-3.22/bin
+```
+
+fix it by sourcing the OpenDDS `setenv.sh` script, e.g. `source ../OpenDDS-3.2.2/setenv.sh`
