@@ -19,7 +19,7 @@ gc_client.initializeDds(ddsArgs);
 function get_time() {
   var date = new Date();
   var ms = date.getTime();
-  return { sec: Math.floor(ms / 1000), nsec: (ms % 1000) * 1000000 };
+  return { sec: Math.floor(ms / 1000), nanosec: (ms % 1000) * 1000000 };
 }
 
 var server_id = uuidv4();
