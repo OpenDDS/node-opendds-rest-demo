@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/simpsont-oci/node-opendds-rest-demo.git"
+    "url": "github.com/OpenDDS/node-opendds-rest-demo.git"
   },
   "author": "TimothySimpson",
   "license": "BSD-3-Clause",
