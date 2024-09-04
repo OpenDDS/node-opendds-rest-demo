@@ -15,9 +15,8 @@
       #player_data li:nth-child(odd) { background: #EFE; font-family: "Lucida Console", "Courier New", monospace; }
       #player_data li:nth-child(even) { background: #DED; font-family: "Lucida Console", "Courier New", monospace; }
     </style>
-  </head>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
     $(function () {
       $('#add_player').submit(function(e) {
         e.preventDefault();
@@ -65,7 +64,7 @@
             let ms = value.connected_since.sec * 1000 + Math.floor(value.connected_since.nanosec / 1000000);
             let my_date = new Date();
             my_date.setTime(ms);
-            $('#player_data').append($('<li>').text(my_date.toISOString() + " :: Player '" + value.player_id + "' ('" + value.guid + ")' has joined the game."));
+            $('#player_data').append($('<li>').text(my_date.toISOString() + " :: Player '" + value.player_id + "' ('" + value.guid + "') has joined the game."));
           });
         } else {
           console.error(xhr.readyState, xhr.status, xhr.responseText);
@@ -86,7 +85,8 @@
       }
       xhr.send(null);
     });
-  </script>
+    </script>
+  </head>
   <body>
     <div id="display_div">
       <label for="player_data">Player Data:</label>
