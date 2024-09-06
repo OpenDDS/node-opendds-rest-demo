@@ -1,7 +1,7 @@
-project: dcpslib {
-  idlflags      += -Wb,export_include=Game_Export.h \
+project: opendds_cxx11 {
+  dcps_ts_flags += -Wb,export_include=Game_Export.h \
                    -Wb,export_macro=Game_Export
-  dcps_ts_flags += -Wb,export_macro=Game_Export
+  idlflags      += -Wb,export_macro=Game_Export
   dynamicflags  += GAME_BUILD_DLL
 
   libout = ../lib

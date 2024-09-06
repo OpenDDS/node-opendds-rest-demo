@@ -49,26 +49,25 @@ struct PlayerConnectionDataReaderListener : public virtual OpenDDS::DCPS::LocalO
     DDS::SampleInfo si;
 
     if (pc_dr->take_next_sample(pc, si) == DDS::RETCODE_OK) {
-        std::string guid(pc.guid.in());
       if (si.valid_data) {
-        auto pos = apc_map.find(guid);
+        auto pos = apc_map.find(pc.guid());
         if (pos == apc_map.end()) {
-          std::cout << "Got new PlayerConnection for player_id '" << pc.player_id.in() << "' with guid '" << pc.guid.in() << "'" << std::endl;
-          auto& apc = apc_map[guid];
-          apc.guid = pc.guid;
-          apc.player_id = pc.player_id;
-          apc.connected_since = pc.connected_since;
-          apc.server_id = pc.server_id;
-          apc.force_disconnect = false;
-          apc.average_connection = 0.0f;
+          std::cout << "Got new PlayerConnection for player_id '" << pc.player_id() << "' with guid '" << pc.guid() << "'" << std::endl;
+          auto& apc = apc_map[pc.guid()];
+          apc.guid(pc.guid());
+          apc.player_id(pc.player_id());
+          apc.connected_since(pc.connected_since());
+          apc.server_id(pc.server_id());
+          apc.force_disconnect(false);
+          apc.average_connection(0.0f);
           apc_dw_->write(apc, 0);
         } else {
-          std::cout << "Got duplicate PlayerConnection for player_id '" << pc.player_id.in() << "' with existing guid " << pc.guid.in() << "'" << std::endl;
+          std::cout << "Got duplicate PlayerConnection for player_id '" << pc.player_id() << "' with existing guid " << pc.guid() << "'" << std::endl;
         }
       } else if (si.instance_state & DDS::NOT_ALIVE_INSTANCE_STATE) {
-        std::cout << "Removing PlayerConnection with guid '" << pc.guid.in() << "'" << std::endl;
-        auto pos = apc_map.find(guid);
-        if (pos != apc_map.end() && pos->second.force_disconnect != true) {
+        std::cout << "Removing PlayerConnection with guid '" << pc.guid() << "'" << std::endl;
+        auto pos = apc_map.find(pc.guid());
+        if (pos != apc_map.end() && !pos->second.force_disconnect()) {
           apc_dw_->dispose(pos->second, 0);
           apc_map.erase(pos);
         }
